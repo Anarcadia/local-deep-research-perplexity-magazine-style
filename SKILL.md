@@ -2,7 +2,7 @@
 name: local-deep-research-perplexity-magazine-style
 description: Use for fast, multi-source web research and readable Chinese popular-science magazine writing modeled on Perplexity Deep Research. Separates search and writing agents; supports optional Exa, Perplexity, Grok Build, and KimiCode coverage plus host-native or OpenRouter writing. Explain missing setup and explicitly ask which research providers and final-report writer to activate for every run.
 metadata:
-  version: "0.4.2"
+  version: "0.5.0"
   license: "MIT"
 ---
 
@@ -129,6 +129,8 @@ research-map.md
 query-log.md
 sources.jsonl
 insights.md
+insight-context.jsonl
+round-context/
 evidence-ledger.md
 outline.md
 report.md
@@ -184,13 +186,50 @@ If Perplexity is disabled, continue targeted searches and state that the systema
 - Prefer primary documents, peer-reviewed work, official institutions, formal publishers, and direct first-person material appropriate to the claim.
 - Track `discovered → shortlisted → read → cited → verified`.
 
+After every research round, write 2–4 new Insights with unique IDs to `insights.md`. Each round must also record its input query/source IDs, new concepts, conflicts, candidate gaps, stop metrics, and new high-value Claim IDs. Insights are mandatory rolling research memory, not factual citations; the final report does not have to quote, paraphrase, or preserve them.
+
+Before continuing, pass the round gate:
+
+```bash
+python3 <skill-dir>/scripts/insight_gate.py validate-round \
+  --run-dir <run-dir> --round <N>
+```
+
+A failed gate blocks both the next search round and report writing.
+
 ### 5. Iterate by gaps
 
-After each round, update Insights, claims, conflicts, source quality, perspective coverage, and the next highest-value gap. Continue while any required dimension, authority, conflict, applicable perspective, or systematic overview remains unresolved.
+After each round, update Insights, claims, conflicts, source quality, perspective coverage, and the next highest-value gap. Before Round N+1, generate and read the complete Insight context packet:
+
+```bash
+python3 <skill-dir>/scripts/insight_gate.py prepare-next \
+  --run-dir <run-dir> --from-round <N> --next-round <N+1> \
+  --agent <search-agent-name>
+```
+
+This records a Context ID, the delivered Insight IDs, a snapshot hash, and a delivery receipt in `insight-context.jsonl`. Pass the packet as background to agentic tools such as KimiCode, Grok Build, or Sonar Deep Research. For atomic search tools such as Exa or host web search, the host search Agent reads the packet before choosing queries.
+
+Every next-round query action must record that Context ID and one influence state in `query-log.md`:
+
+```text
+used | considered-not-used | countered | background-only
+```
+
+The receipt proves that Insights entered the search action's context; it does not require the action to follow them. The search Agent remains free to use the research map, source-quality gaps, counterevidence, perspective coverage, or other high-value reasons.
+
+Continue while any required dimension, authority, conflict, applicable perspective, or systematic overview remains unresolved. Validate every completed round before continuing.
 
 Stop only when required dimensions are covered, core facts have read evidence, counterarguments are represented, applicable perspectives are covered or disclosed, and a final round adds no claim that changes the report.
 
 ### 6. Write from an unordered evidence map
+
+Before writing, run:
+
+```bash
+python3 <skill-dir>/scripts/insight_gate.py validate-run --run-dir <run-dir>
+```
+
+This gate requires contiguous Insight rounds, 2–4 Insights per round, complete delivery receipts for all added rounds, and traceable Context IDs on their search actions. It deliberately does not require any query to obey an Insight or any Insight to appear in the report.
 
 Use `outline.md` as an unordered argument-evidence map. It constrains required points, claim IDs, relationships, and risk boundaries, but not section order, titles, or wording.
 
@@ -236,4 +275,4 @@ See [references/tool-configuration.md](references/tool-configuration.md) for com
 
 ## Completion
 
-The task is complete only when `report.md`, `evidence-ledger.md`, `citation-audit.md`, and `run-summary.md` exist, core claims are traceable, provider usage is recorded, and remaining coverage limits are disclosed.
+The task is complete only when `insight_gate.py validate-run` passes; `insights.md`, `insight-context.jsonl` when added rounds exist, `report.md`, `evidence-ledger.md`, `citation-audit.md`, and `run-summary.md` exist; core claims are traceable; provider usage and Insight receipt status are recorded; and remaining coverage limits are disclosed.
