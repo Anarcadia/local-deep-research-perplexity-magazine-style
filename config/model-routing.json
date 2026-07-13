@@ -32,6 +32,7 @@
       "models": {
         "glm-5.2": {
           "model": "z-ai/glm-5.2",
+          "reasoning_effort": "high",
           "roles": ["report_writing", "independent_audit"]
         },
         "opus-4.6": {
