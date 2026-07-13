@@ -71,7 +71,13 @@ class ModelRouterTest(unittest.TestCase):
         _, glm = router.resolve_model("openrouter", backend, "glm-5.2")
         router.require_role(glm, "writing")
         router.require_role(glm, "audit")
+        self.assertEqual(glm["reasoning_effort"], "high")
+        self.assertEqual(
+            router.openrouter_payload(glm, "write")["reasoning"],
+            {"effort": "high"},
+        )
         _, opus = router.resolve_model("openrouter", backend, "opus-4.6")
+        self.assertEqual(opus["reasoning_effort"], "medium")
         with self.assertRaises(ValueError):
             router.require_role(opus, "audit")
 
