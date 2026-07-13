@@ -1,0 +1,5 @@
+config/.env.local
+config/tools.local.json
+config/tool-selection.local.json
+__pycache__/
+*.pyc

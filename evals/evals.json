@@ -1,0 +1,17 @@
+{
+  "skill_name": "local-deep-research-perplexity-magazine-style",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use Local-Deep-Research-Perplexity-Magazine-style to investigate how heat-pump adoption differs across policy evidence, installer experience, and household opinion in Europe and China. Produce a cited public-facing report.",
+      "expected_output": "When setup is incomplete, welcome the user, strongly recommend Exa for Agents with weak web access, explain its free allowance, provide the Exa registration/API-key URLs and resolved key-file path; then ask which optional providers and report-writing model to activate, show the required service-region notice, and execute the auditable research workflow.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Research how independent game developers evaluate Steam, itch.io, and emerging Chinese distribution platforms, including official policies, developer communities, user sentiment, and commercial tradeoffs.",
+      "expected_output": "Ask for per-run search-provider and writer selections; plan Chinese domestic and overseas grassroots perspectives; use KimiCode and Grok Build when active and relevant; invoke Sonar Deep Research when Perplexity is active and the initial packs remain incomplete; disclose inactive-provider coverage limits.",
+      "files": []
+    }
+  ]
+}

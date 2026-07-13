@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local-Deep-Research-Perplexity-Magazine-style"
+  short_description: "Perplexity 式多源调研与中文科普杂志写作"
+  default_prompt: "Use $local-deep-research-perplexity-magazine-style to ask which optional research providers and report-writing model to activate, then research this topic and produce a readable, cited Chinese magazine-style report."
