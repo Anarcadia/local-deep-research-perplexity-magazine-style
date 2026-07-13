@@ -1,0 +1,55 @@
+{
+  "default_backend": "agent",
+  "allow_automatic_fallback": false,
+  "default_writing_style": "务必使用地道中文，报刊杂志、非学术、大众人文杂志，讲述型的写法去撰写报告，语言自然流动、避免列表清单，图标需要控制出现频率，写作根据内容可以尽可能详细展现，字数不限制。",
+  "default_language_conventions": "使用规范的全角中文标点，不使用半角英文逗号、冒号或引号代替中文标点；标题和正文都应符合正式中文出版物的排版习惯。",
+  "composition_contract": "除非用户明确指定文章结构，outline.md 仅是无序的论点—证据地图，不是文章目录。不要沿用其行顺序、单元标签或研究素材措辞作为章节顺序、标题和固定表达。请先独立判断中心问题与最佳叙事主线，自主重排、合并或拆分论述单元，并拟定更适合成稿的总标题和小标题；同时覆盖全部必选论点，严格遵守 Claim IDs 的证据边界。",
+  "context_files": [
+    "brief.md",
+    "research-map.md",
+    "insights.md",
+    "evidence-ledger.md",
+    "outline.md",
+    "sources.jsonl"
+  ],
+  "audit_context_files": [
+    "brief.md",
+    "evidence-ledger.md",
+    "sources.jsonl",
+    "report.md"
+  ],
+  "audit_contract": "作为与正文生产分离的独立审计者，逐项检查报告中的数字、日期、引语、归属、因果、机制、推断和高影响建议。对照证据账本与来源记录，标记 supported、partially_supported、unsupported 或 source_unavailable，并区分 direct、synthesis、editorial。不要代写一篇新文章；输出具体问题、证据缺口和可执行修复建议。",
+  "backends": {
+    "agent": {
+      "type": "host_native",
+      "model": "current-agent-model",
+      "roles": ["report_writing", "independent_audit"]
+    },
+    "openrouter": {
+      "type": "openai_compatible_api",
+      "base_url": "https://openrouter.ai/api/v1",
+      "default_model_choice": "glm-5.2",
+      "models": {
+        "glm-5.2": {
+          "model": "z-ai/glm-5.2",
+          "roles": ["report_writing", "independent_audit"]
+        },
+        "opus-4.6": {
+          "model": "anthropic/claude-opus-4.6",
+          "roles": ["report_writing"]
+        },
+        "sonnet-5": {
+          "model": "anthropic/claude-sonnet-5",
+          "roles": ["report_writing"]
+        },
+        "gemini-3.1-pro-preview": {
+          "model": "google/gemini-3.1-pro-preview",
+          "roles": ["report_writing"]
+        }
+      },
+      "reasoning_effort": "medium",
+      "timeout_seconds": 1800,
+      "app_title": "Local-Deep-Research-Perplexity-Magazine-style"
+    }
+  }
+}
