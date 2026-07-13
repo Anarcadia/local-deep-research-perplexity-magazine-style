@@ -2,7 +2,7 @@
 name: local-deep-research-perplexity-magazine-style
 description: Use for fast, multi-source web research and readable Chinese popular-science magazine writing modeled on Perplexity Deep Research. Separates search and writing agents; supports optional Exa, Perplexity, Grok Build, and KimiCode coverage plus host-native or OpenRouter writing. Explain missing setup and explicitly ask which research providers and final-report writer to activate for every run.
 metadata:
-  version: "0.4.1"
+  version: "0.4.2"
   license: "MIT"
 ---
 
@@ -198,7 +198,7 @@ The writing agent chooses the narrative order, merges or splits units, and creat
 
 Follow `writing-selection.json`. If `agent` is selected, the current host Agent writes `report.md` directly from the research artifacts. If an OpenRouter model is selected, produce the report through `scripts/production_model_router.py`. OpenRouter is never an automatic paid fallback. Read [references/model-routing.md](references/model-routing.md) before routing.
 
-Unless the user explicitly supplies a writing style, every backend must apply this fixed requirement: write idiomatic Chinese in a non-academic, newspaper or general-interest humanities magazine voice; favor flowing narrative over lists; keep icons rare; develop the material as fully as useful without a word limit.
+Unless the user explicitly supplies a writing style, every backend must apply this fixed requirement: write idiomatic Chinese in a non-academic, newspaper or general-interest humanities magazine voice; favor flowing narrative over lists; keep charts rare; develop the material as fully as useful without a word limit.
 
 ### 7. Audit independently
 

@@ -106,7 +106,9 @@ class ModelRouterTest(unittest.TestCase):
         effective = router.apply_default_style(self.config, "write", "default")
         self.assertIn("地道中文", effective)
         self.assertIn("大众人文杂志", effective)
-        self.assertIn("避免列表清单", effective)
+        self.assertIn("流畅叙事而非列表形式", effective)
+        self.assertIn("尽量少用图表", effective)
+        self.assertNotIn("图标", effective)
         self.assertIn("无序", effective)
         self.assertIn("不要沿用其行顺序", effective)
 
